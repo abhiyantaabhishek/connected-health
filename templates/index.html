@@ -1,0 +1,153 @@
+<head>
+	<title>Connected Health</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
+	<style>
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+		.chart {
+		width:45%;
+		margin-right:2%;
+		margin-left:2%;
+		margin-top:10%;
+		margin-bottom:2%;
+		float: left;
+
+		}
+	</style>
+	<style>
+	img {
+		margin-right:2%;
+		margin-left:2%;
+		margin-top:5%;
+		margin-bottom:2%;
+		border-radius: 8px;
+		float: right;
+
+		width:500;
+
+	}
+	</style>
+	<style>
+	body {
+	  background-color: #000000;
+	}
+	h1 {text-align: center;
+	color: #2962FF;
+	margin-top:5%;
+	}
+	</style>
+</head>
+
+<body>
+<h1>CONNECTED HEALTH</h1>
+	<div class="chart">
+		<canvas id="lineChart"></canvas>
+	</div>
+
+<img src= "{{ url_for('static',filename='img/heart.gif') }}" alt="this slowpoke moves" width="500" height="333">
+
+
+
+
+<script>
+var chartColors = {
+	red: 'rgb(255, 99, 132)',
+	orange: 'rgb(255, 159, 64)',
+	yellow: 'rgb(255, 205, 86)',
+	green: 'rgb(75, 192, 192)',
+	blue: 'rgb(54, 162, 235)',
+	purple: 'rgb(153, 102, 255)',
+	grey: 'rgb(201, 203, 207)'
+};
+
+
+const source = new EventSource("/chart-data");
+var data_value;
+source.onmessage = function (event) {
+	const data = JSON.parse(event.data);
+	data_value = data.value;
+}
+
+function randomScalingFactor() {
+	return data_value;//(Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
+}
+function onRefresh(chart) {
+	chart.config.data.datasets.forEach(function(dataset) {
+		
+		dataset.data.push({
+			x: Date.now(),
+			y: randomScalingFactor()
+		});
+	});
+}
+
+var color = Chart.helpers.color;
+var config = {
+	type: 'line',
+	data: {
+		datasets: [ {
+			label: "Heart Rate",
+			backgroundColor: 'rgb(213,0,0)',
+			borderColor: 'rgb(213,0,0)',
+			
+			cubicInterpolationMode: 'monotone',
+			fill: false,
+
+
+			data: []
+		}]
+	},
+	options: {
+		responsive: true,
+		title: {
+			display: false,
+			text: 'Heart Rate '
+		},
+		scales: {
+			xAxes: [{
+				type: 'realtime',
+				realtime: {
+					duration: 5000,
+					
+					refresh: 100,
+					delay: 2000,
+					onRefresh: onRefresh
+				}
+			}],
+			yAxes: [{
+				scaleLabel: {
+					display: true,
+					labelString: 'value'
+				}
+			}]
+		},
+		tooltips: {
+			mode: 'nearest',
+			intersect: false
+		},
+		hover: {
+			mode: 'nearest',
+			intersect: false
+		}
+	}
+};
+
+window.onload = function() {
+	var ctx = document.getElementById('lineChart').getContext('2d');
+	window.lineChart = new Chart(ctx, config);
+};
+
+
+
+</script>
+
+</body>
