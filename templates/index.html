@@ -1,60 +1,45 @@
 <head>
 	<title>Connected Health</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
-	<style>
-		canvas {
-			-moz-user-select: none;
-			-webkit-user-select: none;
-			-ms-user-select: none;
-		}
-		.chart {
-		width:45%;
-		margin-right:2%;
-		margin-left:2%;
-		margin-top:10%;
-		margin-bottom:2%;
-		float: left;
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		}
-	</style>
-	<style>
-	img {
-		margin-right:2%;
-		margin-left:5%;
-		margin-top:5%;
-		margin-bottom:2%;
-		border-radius: 8px;
-		float: left;
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-		width:500;
-
-	}
-	</style>
-	<style>
-	body {
-	  background-color: #000000;
-	}
-	h1 {text-align: center;
-	color: #2962FF;
-	margin-top:5%;
-	}
-	</style>
 </head>
 
-<body>
-<h1>CONNECTED HEALTH</h1>
-	<div class="chart">
+<body style="background-color:black;">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+
+
+  <div class="text-center pt-5">
+      <div class="col">
+      <h1 style="color:#2962FF;">CONNECTED HEALTH</h1>
+    </div>
+   
+  </div>
+<div class="container ">
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 pt-4">
 		<canvas id="lineChart"></canvas>
-	</div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 pt-4">
+		<img src= "{{ url_for('static',filename='img/heart.gif') }}" alt="this slowpoke moves" width="500" height="333">
+    </div>
 
-<img src= "{{ url_for('static',filename='img/heart.gif') }}" alt="this slowpoke moves" width="500" height="333">
-
+  </div>
+</div>
 
 
 
