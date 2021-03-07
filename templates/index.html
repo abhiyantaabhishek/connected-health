@@ -68,7 +68,30 @@
 </div>
 
 
-<script>
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script> 
+<script id="mainscript">
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+	apiKey: "AIzaSyCRSKaKHTDbzXlpTfpehSNTugpNsctvRtU",
+	authDomain: "luminous-fire-9722.firebaseapp.com",
+	databaseURL: "https://luminous-fire-9722.firebaseio.com",
+	projectId: "luminous-fire-9722",
+	storageBucket: "luminous-fire-9722.appspot.com",
+	messagingSenderId: "232898681001",
+	appId: "1:232898681001:web:b1fe8c9821b4b2d2f971b8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);	
+var data_value;
+var starCountRef = firebase.database().ref('Health');
+starCountRef.on('value', (snapshot) => {
+  data_value = snapshot.val().Heart_rate;
+  //document.write(data_value)
+});
+  
+
 var chartColors = {
 	red: 'rgb(255, 99, 132)',
 	orange: 'rgb(255, 159, 64)',
@@ -79,13 +102,13 @@ var chartColors = {
 	grey: 'rgb(201, 203, 207)'
 };
 
-
+/*
 const source = new EventSource("/chart-data");
 var data_value;
 source.onmessage = function (event) {
 	const data = JSON.parse(event.data);
 	data_value = data.value;
-}
+}*/
 
 function randomScalingFactor() {
 	return data_value;//(Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
