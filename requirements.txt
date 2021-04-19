@@ -11,3 +11,4 @@ matplotlib==3.0.3
 pandas>=0.19
 jsons==1.4.0
 requests
+pickle
