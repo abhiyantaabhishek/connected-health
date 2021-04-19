@@ -11,7 +11,16 @@ import pandas as pd
 from flask import Flask, Response, render_template
 
 app = Flask(__name__)
+import requests
 
+url = "https://luminous-fire-9722.firebaseio.com/Health.json/"
+
+headers = {
+    'application-id': "2AA28C7B-9C0E-99AB-FFF5-75156EC1FF00",
+    'secret-key': "4EA6B2D9-C23B-A54D-FFC8-2E7B96623E00",
+    'application-type': "REST",
+
+    }
 
 
 @app.route('/')
@@ -24,6 +33,7 @@ def chart_data():
     def generate_random_data():
         df = pd.read_csv("data.csv")
         ind = 0		
+        responses = requests.request("GET", url, headers=headers)        
         while True:
 
             if(ind == df.size-1):
