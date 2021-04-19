@@ -27,8 +27,11 @@ headers = {
 @app.route('/')
 def index():
     return render_template('index.html')
-
-
+	
+@app.route('/data', methods=['GET', 'POST'])
+def data():
+	return render_template('data.html')
+	
 @app.route('/chart-data')
 def chart_data():
     def generate_random_data():       
