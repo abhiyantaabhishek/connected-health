@@ -158,7 +158,7 @@ var config = {
 				realtime: {
 					duration: 10000,
 					
-					refresh: 10,
+					refresh: 100,
 					delay: 2000,
 					onRefresh: onRefresh
 				},
@@ -166,7 +166,11 @@ var config = {
 			}],
 			yAxes: [{
 			
+			    ticks: {
+                max: 1,
+                min: -0.5
 
+				},
 			
 				scaleLabel: {
 					display: true,
