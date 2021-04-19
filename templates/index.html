@@ -72,6 +72,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script> 
 <script id="mainscript">
+/*
   // Your web app's Firebase configuration
   var firebaseConfig = {
 	apiKey: "AIzaSyCRSKaKHTDbzXlpTfpehSNTugpNsctvRtU",
@@ -91,7 +92,7 @@ starCountRef.on('value', (snapshot) => {
   //document.write(data_value)
 });
   
-
+*/
 var chartColors = {
 	red: 'rgb(255, 99, 132)',
 	orange: 'rgb(255, 159, 64)',
@@ -102,15 +103,16 @@ var chartColors = {
 	grey: 'rgb(201, 203, 207)'
 };
 
-/*
+
 const source = new EventSource("/chart-data");
 var data_value;
 source.onmessage = function (event) {
 	const data = JSON.parse(event.data);
 	data_value = data.value;
-}*/
+}
 
 function randomScalingFactor() {
+	//document.write(data_value)
 	return data_value;//(Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
 }
 function onRefresh(chart) {
@@ -132,7 +134,7 @@ var config = {
 			backgroundColor: 'rgb(213,0,0)',
 			borderColor: 'rgb(213,0,0)',
 			
-			cubicInterpolationMode: 'monotone',
+			cubicInterpolationMode: 'default',
 			fill: false,
 
 
@@ -154,7 +156,7 @@ var config = {
 			xAxes: [{
 				type: 'realtime',
 				realtime: {
-					duration: 5000,
+					duration: 10000,
 					
 					refresh: 100,
 					delay: 2000,
@@ -165,9 +167,9 @@ var config = {
 			yAxes: [{
 			
 			    ticks: {
-                max: 160,
-                min: 40,
-                stepSize: 20
+                max: 1,
+                min: -0.5
+
 				},
 			
 				scaleLabel: {
