@@ -34,6 +34,7 @@ def chart_data():
         df = pd.read_csv("data.csv")
         ind = 0		
         responses = requests.request("GET", url, headers=headers)        
+        json_data_server = json.loads(response.text)
         while True:
 
             if(ind == df.size-1):
