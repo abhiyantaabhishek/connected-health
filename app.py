@@ -28,24 +28,24 @@ import threading
 import time
 
 
-class MyThread(threading.Thread):
-    def run(self): 
-        global go
-        global start 
-        global end 
-        global new_json_data_server
-    # Default called function with mythread.start()
-        print("{} started!".format(self.getName()))        # "Thread-x started!"
-        while True:
-            if(start >= end/2 and go ==1):
-                print("getting response")
-                response = requests.request("GET", url, headers=headers)
-                new_json_data_server = json.loads(response.text)
-                go = 0
-        
-        time.sleep(1)                                      # Pretend to work for a second
-        print("{} finished!".format(self.getName()))       # "Thread-x finished!"
-
+#class MyThread(threading.Thread):
+#    def run(self): 
+#        global go
+#        global start 
+#        global end 
+#        global new_json_data_server
+#    # Default called function with mythread.start()
+#        print("{} started!".format(self.getName()))        # "Thread-x started!"
+#        while True:
+#            if(start >= end/2 and go ==1):
+#                print("getting response")
+#                response = requests.request("GET", url, headers=headers)
+#                new_json_data_server = json.loads(response.text)
+#                go = 0
+#        
+#        time.sleep(1)                                      # Pretend to work for a second
+#        print("{} finished!".format(self.getName()))       # "Thread-x finished!"
+#
 
 @app.route('/')
 def index():
@@ -55,7 +55,7 @@ def index():
 @app.route('/chart-data')
 def chart_data():
     def generate_random_data():
-        df = pd.read_csv("data.csv")
+        #df = pd.read_csv("data.csv")
         
         global go
         global start 
@@ -64,11 +64,12 @@ def chart_data():
         start = 0 
         print("getting response in cahrt_data")
         response = requests.request("GET", url, headers=headers)
-        json_data_server = new_json_data_server = json.loads(response.text)
+        #json_data_server = new_json_data_server = json.loads(response.text)
+        json_data_server = json.loads(response.text)
         print("starting while loop")
         while True:
             if(start >= end):
-                json_data_server = new_json_data_server
+                #json_data_server = new_json_data_server
                 start = 0
                 go = 1
             start = start+1
@@ -93,6 +94,6 @@ if __name__ == '__main__':
     end =200-1
     new_json_data_server = [0]
     go = 1
-    mythread = MyThread(name = "Thread-{}".format(1))  # ...Instantiate a thread and pass a unique ID to it
-    mythread.start() 
+    #mythread = MyThread(name = "Thread-{}".format(1))  # ...Instantiate a thread and pass a unique ID to it
+    #mythread.start() 
     app.run(debug=True, threaded=True)
