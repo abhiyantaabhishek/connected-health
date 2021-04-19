@@ -8,10 +8,11 @@
 import json
 import time
 import pandas as pd
+from datetime import datetime
 from flask import Flask, Response, render_template
-
+import pickle
 app = Flask(__name__)
-import requests
+#import requests
 
 url = "https://luminous-fire-9722.firebaseio.com/Health.json/"
 
@@ -30,21 +31,25 @@ def index():
 
 @app.route('/chart-data')
 def chart_data():
-    def generate_random_data():
-        df = pd.read_csv("data.csv")
-        ind = 0		
-        responses = requests.request("GET", url, headers=headers)        
-        json_data_server = json.loads(response.text)
+    def generate_random_data():       
+        file_in = open("data.pickle",'rb')
+        data = pickle.load(file_in)
+        json_data_server = list(data[range(0,2000,10)])
+        file_in.close()          
+        start = 0
+        end = 200-1
+        #responses = requests.request("GET", url, headers=headers)        
+        #json_data_server = json.loads(responses.text)
         while True:
-
-            if(ind == df.size-1):
-                ind=0
-            else:
-                ind=ind+1
+            if(start >= end):
+                #json_data_server = new_json_data_server
+                start = 0
+            start = start+1
             json_data = json.dumps(
                 #{'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'value': random.random() * 100})
-                {'time': df['date_time'].iloc[ind], 'value': int(df['hr'].iloc[ind])}) 
-                #{'time': df['date_time'].iloc[ind], 'value':  ind})  				
+                {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'value': json_data_server[start]})
+                #{'time': df['date_time'].iloc[ind], 'value': int(df['hr'].iloc[ind])}) 
+                #{'time': df['date_time'].iloc[ind], 'value':  ind})                  
             yield f"data:{json_data}\n\n"
             time.sleep(0.1)
 
