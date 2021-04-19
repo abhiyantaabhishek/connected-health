@@ -32,25 +32,18 @@ def index():
 def chart_data():
     def generate_random_data():
         df = pd.read_csv("data.csv")
-        ind = 0    
-        start = 0
-        end = 200-1
+        ind = 0		
         responses = requests.request("GET", url, headers=headers)        
-        json_data_server = json.loads(responses.text)
         while True:
-            if(start >= end):
-                #json_data_server = new_json_data_server
-                start = 0
-            start = start+1
+
             if(ind == df.size-1):
                 ind=0
             else:
                 ind=ind+1
             json_data = json.dumps(
                 #{'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'value': random.random() * 100})
-                {'time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'value': json_data_server[start]})
-                #{'time': df['date_time'].iloc[ind], 'value': int(df['hr'].iloc[ind])}) 
-                #{'time': df['date_time'].iloc[ind], 'value':  ind})                  
+                {'time': df['date_time'].iloc[ind], 'value': int(df['hr'].iloc[ind])}) 
+                #{'time': df['date_time'].iloc[ind], 'value':  ind})  				
             yield f"data:{json_data}\n\n"
             time.sleep(0.1)
 
